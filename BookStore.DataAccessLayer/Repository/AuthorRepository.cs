@@ -17,11 +17,11 @@ namespace BookStore.DataAccessLayer.Repository
         {
             connectionString = conn;
         }
-        public List<Author> GetAuthors()
+        public List<Author> GetAllAuthors()
         {
             using (IDbConnection db = new SqlConnection(connectionString) )
             {
-                return db.Query<Author>("SELECT*FROM Authors").ToList();
+                return db.Query<Author>("SELECT * FROM Authors").ToList();
             }
         }
 
@@ -29,7 +29,7 @@ namespace BookStore.DataAccessLayer.Repository
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<Author>("Select * FROM Authors Where Id = @id", new { id = Id }).FirstOrDefault();
+                return db.Query<Author>("Select * FROM Authors WHERE Id = @id", new { id = Id }).FirstOrDefault();
             }
         }
 
@@ -37,8 +37,17 @@ namespace BookStore.DataAccessLayer.Repository
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "INSERT INTO Authors (Title) VALUES(@Name,@Age Where id = @Id";
+                var sqlQuery = "INSERT INTO Authors (Title) VALUES(@Name,@Age Where Id = @Id";
                 db.Execute(sqlQuery, author);
+            }
+        }
+
+        public void Update(int Id, Author author)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = "DELETE FROM Authors WHERE Id = @id";
+                db.Execute(sqlQuery, new { id = Id});
             }
         }
 
@@ -46,7 +55,7 @@ namespace BookStore.DataAccessLayer.Repository
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Users WHERE Id =@id";
+                var sqlQuery = "DELETE FROM Authors WHERE Id =@id";
                     db.Execute(sqlQuery, new { id = Id });
             }
 

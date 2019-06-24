@@ -10,7 +10,7 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
         void Create(Author author);
         void Delete(int Id);
         Author Get(int Id );
-        List<Author> GetAuthors();
+        List<Author> GetAllAuthors();
         void Update(int Id,Author Name);
     }
 }
