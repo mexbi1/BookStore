@@ -8,8 +8,10 @@ namespace BookStore.BusinessLogicLayer.Services.Interfaces
     {
         GetAuthorViewModel Get(int Id);
         GetAllAuthorViewModel  GetAll();
-        void Create(CreateAuthorViewModel createAuthorViewModel);
+                void Create(CreateAuthorViewModel createAuthorViewModel);
         void Delete(int Id);
         UpdateAuthorViewModel Update(UpdateAuthorViewModel updateAuthorView);
+        GetNameAuthorViewModel GetByName(GetNameAuthorViewModel getNameAuthor);
+
     }
 }

@@ -10,6 +10,6 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
     {
         void Update(Author author);
         Author Create(Author author);
-        Author GetName(Author author);
+        Author GetByName(string name);
     }
 }

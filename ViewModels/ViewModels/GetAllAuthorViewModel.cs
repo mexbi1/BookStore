@@ -11,6 +11,7 @@ namespace ViewModels.ViewModels
 
    public class AuthorGetAllAuthorViewModelItem
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

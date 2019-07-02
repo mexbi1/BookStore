@@ -35,11 +35,11 @@ namespace BookStore.DataAccessLayer.Repository
                 var result = db.Execute(SqlQuery, author);
             }
         }
-        public Author GetName(Author author)
+        public Author GetByName(string name)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.QuerySingle<Author>($"SELECT * FROM Authors WHERE Name = @Name");
+                return db.QuerySingle<Author>($"SELECT * FROM Authors WHERE Name = @Name", new { Name = name});
             }
         }
 
