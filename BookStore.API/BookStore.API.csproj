@@ -11,10 +11,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookStore.BusinessLogicLayer\BookStore.BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\BookStore.DataAccessLayer\BookStore.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\BookStore.Shared\BookStore.Shared.csproj" />
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

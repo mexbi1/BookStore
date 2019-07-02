@@ -1,54 +1,46 @@
 ﻿using BookStore.DataAccessLayer.Models;
+using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
+using BookStore.Shared;
 using Dapper;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace BookStore.DataAccessLayer.Repository
 {
-    class BookRepository : IBookRepository
+   public  class BookRepository : GenericRepository<Book>, IBookRepository
     {
-        string connectionString = null;
-        public BookRepository(string conn)
+        private readonly AppSettings _appsettings;
+
+        public BookRepository(AppSettings appsettings) : base(appsettings)
         {
-            connectionString = conn;
+            _appsettings = appsettings;
         }
 
-        public List<Book> GetAllBooks()
+        public Book Create(Book book)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.Query<Book>("SELECT * FROM Books").ToList();
-            }
-        }
-        public Book Get(int Id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return db.Query<Book>("SELECT * FROM Books WHERE id = @Id", new { id = Id }).FirstOrDefault();
+                var sqlQuery = "INSERT INTO Books (Title,Price) OUTPUT INSERTED * VALUES(@Title, @Price)";
+                return db.QuerySingle<Book>(sqlQuery, book);
             }
         }
 
-        public void Create(Book book)
+        public void Update(Book book)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var sqlQuery = "INSERT INTO Books (Title,Price) VALUES(@Title, @Price)";
-                db.Execute(sqlQuery, book);
+                var SqlQuery = $"UPDATE[dbo].[Book] SET Title = @Title AND Price = @Price  WHERE  Bookid = {book.BookId}";
+                var result = db.Execute(SqlQuery, book);
+            }
+        }
+        public Book GetTitle(Book book)
+        {
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            {
+                return db.QuerySingle<Book>($"SELECT * FROM Books WHERE Title = {book.Title}");
             }
         }
 
-        public void Delete(int Id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "DELETE FROM Author WHERE Id = @id";
-                db.Execute(sqlQuery, new { id = Id });
-            }
-        }
-
-        
     }
 }

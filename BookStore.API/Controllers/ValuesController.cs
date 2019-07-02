@@ -1,27 +1,28 @@
 ﻿using BookStore.DataAccessLayer.EntityFramework;
 using BookStore.DataAccessLayer.Models;
+using BookStore.DataAccessLayer.Repository.GenericRepository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.Linq;
+using BookStore.DataAccessLayer.Repository.Interfaces;
 
 namespace BookStore.API.Controllers
 {
+
     [Route("api/[controller]")]
 
     public class ValuesController : ControllerBase
     {
-        public ApplicationContext ApplicationContext;
-        public ValuesController()
-        {
-            ApplicationContext = new ApplicationContext();
+        private string _connectionString;
+        private readonly IBookRepository _bookRepository;
 
-        }
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ValuesController(IBookRepository bookRepository)
         {
-            return new string[] { "value1", "value2" };
+            _bookRepository = bookRepository;
         }
+
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -31,26 +32,20 @@ namespace BookStore.API.Controllers
         }
 
         // POST api/values
-       
+
         [HttpPost]
         public void Post([FromBody] string value)
-         {
-            try
+        {
+            using (ApplicationContext db = new ApplicationContext())
             {
-                Book Book1 = new Book {BookId = 4, Title = "KingLion", Price = 10 };
-                using (ApplicationContext db = new ApplicationContext())
-                {
-                    db.Books.Remove(Book1);
-                    db.SaveChanges();
-                }
+                Book book1 = new Book { Title = "King Lion", Price = 10 };
+                Book book2 = new Book { Title = "Shrek", Price = 20 };
+                Book book3 = new Book { Title = "Mafia", Price = 30 };
+                db.Add(book1);
+                db.Add(book2);
+                db.Add(book3);
+                db.SaveChanges();
             }
-            catch (System.Exception ex)
-            {
-
-                throw;
-            }
-           
-            
         }
 
         // PUT api/values/5
@@ -60,9 +55,18 @@ namespace BookStore.API.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        //  [HttpDelete("{id}")]
+        //public void Delete(int id)
+
+
+        [HttpGet]
+        public List<Book> GetAll()
         {
+            return _bookRepository.GetAll().ToList();
         }
     }
+
 }
+
+
+

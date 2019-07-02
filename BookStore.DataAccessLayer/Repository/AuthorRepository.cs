@@ -1,5 +1,7 @@
 ﻿using BookStore.DataAccessLayer.Models;
+using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
+using BookStore.Shared;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -8,59 +10,38 @@ using System.Linq;
 
 namespace BookStore.DataAccessLayer.Repository
 {
-    public class AuthorRepository : IAuthorRepository
+    public class AuthorRepository : GenericRepository<Author>, IAuthorRepository
     {
-         
-        string connectionString = null;
 
-        public AuthorRepository(string conn)
+        private readonly AppSettings _appsettings;
+        public AuthorRepository(AppSettings appsettings) : base(appsettings)
         {
-            connectionString = conn;
+            _appsettings = appsettings;
         }
-        public List<Author> GetAllAuthors()
+
+        public Author Create(Author author)
         {
-            using (IDbConnection db = new SqlConnection(connectionString) )
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.Query<Author>("SELECT * FROM Authors").ToList();
+                var SqlQuery = ("INSERT INTO Authors (Name) UOTPUT INSERTED * VALUES(@Name)");
+                return db.QuerySingle<Author>(SqlQuery, author);
+            }
+        }
+        public void Update(Author author)
+        {
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            {
+                var SqlQuery = ("@UPDATE[dbo].[Book] SET Name = @Name Where Authorid = @AuthorId");
+                var result = db.Execute(SqlQuery, author);
+            }
+        }
+        public Author GetName(Author author)
+        {
+            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            {
+                return db.QuerySingle<Author>($"SELECT * FROM Authors WHERE Name = @Name");
             }
         }
 
-        public Author Get(int Id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return db.Query<Author>("Select * FROM Authors WHERE Id = @id", new { id = Id }).FirstOrDefault();
-            }
-        }
-
-        public void  Create(Author author)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "INSERT INTO Authors (Title) VALUES(@Name,@Age Where Id = @Id";
-                db.Execute(sqlQuery, author);
-            }
-        }
-
-        public void Update(int Id, Author author)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "DELETE FROM Authors WHERE Id = @id";
-                db.Execute(sqlQuery, new { id = Id});
-            }
-        }
-
-        public void Delete(int Id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "DELETE FROM Authors WHERE Id =@id";
-                    db.Execute(sqlQuery, new { id = Id });
-            }
-
-        }
-
-       
     }
 }

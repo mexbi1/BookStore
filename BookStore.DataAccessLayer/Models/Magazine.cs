@@ -9,5 +9,6 @@ namespace BookStore.DataAccessLayer.Models
     {
         public int MagazineId { get; set; }
         public string Title { get; set; }
+        public int Price { get; set; }
     }
 }

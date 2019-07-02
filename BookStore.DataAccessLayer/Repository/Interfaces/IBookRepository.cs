@@ -1,16 +1,13 @@
 ﻿using BookStore.DataAccessLayer.Models;
-using System;
+using BookStore.DataAccessLayer.Repository.GenericRepository;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BookStore.DataAccessLayer.Repository.Interfaces
 {
-   public interface IBookRepository
+    public interface IBookRepository: IGenericRepository<Book>
     {
-        void Create(Book book);
-        void Delete(int Id);
-        Book Get(int Id);
-        List<Book> GetAllBooks();
-        void Update(int Id, Book Title, Book Price);
+        void Update( Book book);
+        Book Create( Book book);
+        Book GetTitle(Book book);
     }
 }

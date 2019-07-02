@@ -1,4 +1,11 @@
-﻿using BookStore.DataAccessLayer.EntityFramework;
+﻿using BookStore.BusinessLogicLayer.Services;
+using BookStore.BusinessLogicLayer.Services.Interfaces;
+using BookStore.DataAccessLayer.EntityFramework;
+using BookStore.DataAccessLayer.Models;
+using BookStore.DataAccessLayer.Repository;
+using BookStore.DataAccessLayer.Repository.GenericRepository;
+using BookStore.DataAccessLayer.Repository.Interfaces;
+using BookStore.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +28,21 @@ namespace BookStore.API
         {
             //services.AddDbContext<ApplicationContext>(options =>
             //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings:DefaultName"));
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             //});
 
-                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<AppSettings>(s => new AppSettings() { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IMagazineRepository, MagazineRepository>();
+         //   services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+
+
+            services.AddScoped<IAuthorService, AuthorService>();
+            
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
