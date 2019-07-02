@@ -11,7 +11,7 @@ namespace BookStore.BusinessLogicLayer.Services.Interfaces
                 void Create(CreateAuthorViewModel createAuthorViewModel);
         void Delete(int Id);
         UpdateAuthorViewModel Update(UpdateAuthorViewModel updateAuthorView);
-        GetNameAuthorViewModel GetByName(GetNameAuthorViewModel getNameAuthor);
+        GetNameAuthorViewModel GetByName(string name);
 
     }
 }

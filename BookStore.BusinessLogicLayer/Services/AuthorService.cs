@@ -48,12 +48,11 @@ namespace BookStore.BusinessLogicLayer.Services
         {
             _authorRepository.Delete(Id);
         }
-        public GetNameAuthorViewModel GetByName(GetNameAuthorViewModel getNameAuthor)
+        public GetNameAuthorViewModel GetByName(string name)
         {
-            Author authors = _authorRepository.GetByName(getNameAuthor.Name);
+            Author authors = _authorRepository.GetByName(name);
             GetNameAuthorViewModel getName = new GetNameAuthorViewModel();
             return getName;
-
         }
 
     }
