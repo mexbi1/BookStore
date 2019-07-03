@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using static Dapper.SqlMapper;
+﻿using System.Collections.Generic;
 
 namespace BookStore.DataAccessLayer.Repository.GenericRepository
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        TEntity Get(int Id);
+        TEntity GetId(int Id);
         IEnumerable<TEntity> GetAll();
         void Delete(int Id);
     }

@@ -1,17 +1,14 @@
-﻿using BookStore.DataAccessLayer.Models;
-using System.Collections.Generic;
-using ViewModels.ViewModels;
+﻿using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
 
 namespace BookStore.BusinessLogicLayer.Services.Interfaces
 {
-  public  interface IAuthorService
+    public  interface IAuthorService
     {
-        GetAuthorViewModel Get(int Id);
-        GetAllAuthorViewModel  GetAll();
-                void Create(CreateAuthorViewModel createAuthorViewModel);
+        GetIdAuthorViews GetId(int Id);
+        GetAllAuthorViews GetAll();
+        void Create(CreateAuthorViews createAuthorViews);
         void Delete(int Id);
-        UpdateAuthorViewModel Update(UpdateAuthorViewModel updateAuthorView);
-        GetNameAuthorViewModel GetByName(string name);
-
+        UpdateAuthorViews Update(UpdateAuthorViews updateAuthorView);
+        GetByNameAuthorViews GetByName(string name);
     }
 }

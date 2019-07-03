@@ -1,10 +1,8 @@
 ﻿using BookStore.DataAccessLayer.EntityFramework;
 using BookStore.DataAccessLayer.Models;
-using BookStore.DataAccessLayer.Repository.GenericRepository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.Linq;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 
@@ -15,7 +13,6 @@ namespace BookStore.API.Controllers
 
     public class ValuesController : ControllerBase
     {
-        private string _connectionString;
         private readonly IBookRepository _bookRepository;
 
         public ValuesController(IBookRepository bookRepository)
@@ -24,12 +21,7 @@ namespace BookStore.API.Controllers
         }
 
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            return Ok();
-        }
+       
 
         // POST api/values
 

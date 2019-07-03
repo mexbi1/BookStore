@@ -30,15 +30,15 @@ namespace BookStore.DataAccessLayer.Repository
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var SqlQuery = $"UPDATE[dbo].[Book] SET Title = @Title AND Price = @Price  WHERE  Bookid = {book.BookId}";
+                var SqlQuery = $"UPDATE[dbo].[Book] SET Title = @Title AND Price = @Price  WHERE  BookId = @Bookd";
                 var result = db.Execute(SqlQuery, book);
             }
         }
-        public Book GetTitle(Book book)
+        public Book GetTitle(string Title)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.QuerySingle<Book>($"SELECT * FROM Books WHERE Title = {book.Title}");
+                return db.QuerySingle<Book>($"SELECT * FROM Books WHERE Title = @Title",new {title = Title});
             }
         }
 

@@ -1,41 +1,56 @@
-﻿using System;
+﻿using BookStore.BusinessLogicLayer.Services.Interfaces;
+using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
 using BookStore.Shared;
 using Microsoft.AspNetCore.Mvc;
-
-using ViewModels.ViewModels;
 
 namespace BookStore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorController : ControllerBase
+    public class AuthorController : Controller
     {
         private readonly AppSettings _appsettings;
         public AuthorController(AppSettings appsettings)
         {
             _appsettings = appsettings;
         }
+
+        private readonly IAuthorService _authorService;
+
+        [HttpGet("{id?}")]
+        public IActionResult GetId(int Id)
+        {
+            GetIdAuthorViews getIdAuthor =  _authorService.GetId(Id);
+            return Ok(_authorService.GetId(Id));
+        }   
         [HttpGet]
-        public GetAuthorViewModel Get(int Id)
+        public IActionResult GetAll()
         {
-            throw new NotImplementedException();
+            GetAllAuthorViews getAllAuthors = _authorService.GetAll();  
+            return Ok();
         }
-        public GetAllAuthorViewModel GetAll()
+        [HttpGet]
+        public IActionResult GetByName(string Name)
         {
-            throw new NotImplementedException();
+            GetByNameAuthorViews getByNameAuthor = _authorService.GetByName(Name);
+            return Ok();
         }
-        public void Create(CreateAuthorViewModel createAuthorViewModel)
+        [HttpPost]
+        public void Create(CreateAuthorViews createAuthor)
         {
-            throw new NotImplementedException();
+           _authorService.Create(createAuthor);
         }
-        public void  Delete( int Id)
+        [HttpPut]
+        public IActionResult Update(UpdateAuthorViews update)
         {
-            throw new NotImplementedException();
+            _authorService.Update(update);
+            return Ok();
         }
-        public UpdateAuthorViewModel Update(UpdateAuthorViewModel update)
+        [HttpDelete]
+        public IActionResult Delete(int Id)
         {
-            throw new NotImplementedException();
+            _authorService.Delete(Id);
+            return Ok();
         }
-         
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BookStore.DataAccessLayer.Models;
 using BookStore.DataAccessLayer.Repository.GenericRepository;
-using System.Collections.Generic;
 
 namespace BookStore.DataAccessLayer.Repository.Interfaces
 {
@@ -8,6 +7,6 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
     {
         void Update( Book book);
         Book Create( Book book);
-        Book GetTitle(Book book);
+        Book GetTitle(string Title);
     }
 }

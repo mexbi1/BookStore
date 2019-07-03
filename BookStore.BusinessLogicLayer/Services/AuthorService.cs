@@ -1,12 +1,8 @@
 ﻿using BookStore.BusinessLogicLayer.Services.Interfaces;
+using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
 using BookStore.DataAccessLayer.Models;
-using BookStore.DataAccessLayer.Repository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ViewModels.ViewModels;
 
 namespace BookStore.BusinessLogicLayer.Services
 {
@@ -18,42 +14,38 @@ namespace BookStore.BusinessLogicLayer.Services
             _authorRepository = authorRepository;
         }
 
-        public GetAuthorViewModel Get(int Id)
+        public GetIdAuthorViews GetId(int Id)
         {
-            Author author1 = _authorRepository.Get(Id);
-            GetAuthorViewModel getAuthor = new GetAuthorViewModel();
+            Author author1 = _authorRepository.GetId(Id);
+            GetIdAuthorViews getAuthor = new GetIdAuthorViews();
             getAuthor.Name = author1.Name;
             return getAuthor;
         }
-
-        public GetAllAuthorViewModel GetAll()
+        public GetByNameAuthorViews GetByName(string name)
         {
-            var authors = _authorRepository.GetAll().Select(x => new AuthorGetAllAuthorViewModelItem { Name = x.Name }).ToList();
-            return new GetAllAuthorViewModel() { authorGetAllAuthor = authors };
+            Author authors = _authorRepository.GetByName(name);
+            GetByNameAuthorViews getByName = new GetByNameAuthorViews();
+            return getByName;
         }
-        public void Create(CreateAuthorViewModel createAuthor)
+        public GetAllAuthorViews GetAll()
+        {
+            var authors = _authorRepository.GetAll().Select(x => new AuthorGetAllAuthorViewsItem { Name = x.Name }).ToList();
+            return new GetAllAuthorViews() { AllAuthorViews = authors };
+        }
+        public void Create(CreateAuthorViews createAuthor)
         {
             {
                 _authorRepository.Create(new Author() { Name = createAuthor.Name });
             }
         }
-
-        public UpdateAuthorViewModel Update(UpdateAuthorViewModel authorViewModel)
+        public UpdateAuthorViews Update(UpdateAuthorViews authorViews)
         {
-            _authorRepository.Update(new Author { Name = authorViewModel.Name });
-            return authorViewModel;
+            _authorRepository.Update(new Author { Name = authorViews.Name });
+            return authorViews;
         }
-
         public void Delete(int Id)
         {
             _authorRepository.Delete(Id);
         }
-        public GetNameAuthorViewModel GetByName(string name)
-        {
-            Author authors = _authorRepository.GetByName(name);
-            GetNameAuthorViewModel getName = new GetNameAuthorViewModel();
-            return getName;
-        }
-
-    }
+      }
 }

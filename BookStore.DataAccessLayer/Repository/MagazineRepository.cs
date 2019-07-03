@@ -3,12 +3,8 @@ using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using BookStore.Shared;
 using Dapper;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 
 namespace BookStore.DataAccessLayer.Repository
 {
@@ -34,15 +30,15 @@ namespace BookStore.DataAccessLayer.Repository
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var SqlQuery = "UPDATE[dbo].[Book] SET IsActive = @IsActive AND Name = @Name WHERE MagazineId = @MagazineId";
+                var SqlQuery = "UPDATE[dbo].[Book] SET Price = @Price AND Title = @Title WHERE MagazineId = @MagazineId";
                 var result = db.Execute(SqlQuery, magazine);
             }
         }
-        public Magazine GetTitle(Magazine magazine)
+        public Magazine GetTitle(string Title)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.QuerySingle<Magazine>($"SELECT * FROM Magazines WHERE Title = @Title");
+                return db.QuerySingle<Magazine>($"SELECT * FROM Magazines WHERE Title = @Title",new { title = Title});
             }
         }
     }

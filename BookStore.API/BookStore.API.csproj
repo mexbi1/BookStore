@@ -19,7 +19,6 @@
     <ProjectReference Include="..\BookStore.BusinessLogicLayer\BookStore.BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\BookStore.DataAccessLayer\BookStore.DataAccessLayer.csproj" />
     <ProjectReference Include="..\BookStore.Shared\BookStore.Shared.csproj" />
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

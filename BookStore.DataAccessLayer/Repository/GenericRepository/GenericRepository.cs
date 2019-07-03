@@ -23,7 +23,7 @@ namespace BookStore.DataAccessLayer.Repository.GenericRepository
                 return db.Query<TEntity>($"SELECT * FROM {typeof(TEntity).Name}s").ToList();
             }
         }
-        public TEntity Get(int Id)
+        public TEntity GetId(int Id)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {

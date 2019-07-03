@@ -3,10 +3,8 @@ using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using BookStore.Shared;
 using Dapper;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace BookStore.DataAccessLayer.Repository
 {
