@@ -1,10 +1,10 @@
-﻿namespace BookStore.DataAccessLayer.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace BookStore.DataAccessLayer.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int UserId { get; set; }
-        public string Email { get; set; }
-        public int Password { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

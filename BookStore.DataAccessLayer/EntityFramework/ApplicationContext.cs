@@ -1,12 +1,13 @@
 ﻿using BookStore.DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.DataAccessLayer.EntityFramework
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<User>
     {
 
-        public DbSet<User> Users { get; set; }
+        //public  DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Magazine> Magazines { get; set; }

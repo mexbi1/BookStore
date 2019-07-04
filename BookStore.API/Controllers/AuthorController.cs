@@ -9,19 +9,13 @@ namespace BookStore.API.Controllers
     [ApiController]
     public class AuthorController : Controller
     {
-        private readonly AppSettings _appsettings;
-        public AuthorController(AppSettings appsettings)
-        {
-            _appsettings = appsettings;
-        }
-
         private readonly IAuthorService _authorService;
 
-        [HttpGet("{id?}")]
-        public IActionResult GetId(int Id)
+        [HttpGet]
+        public IActionResult GetId(int id)
         {
-            GetIdAuthorViews getIdAuthor =  _authorService.GetId(Id);
-            return Ok(_authorService.GetId(Id));
+            GetIdAuthorViews getIdAuthor =  _authorService.GetId(id);
+            return Ok(_authorService.GetId(id));
         }   
         [HttpGet]
         public IActionResult GetAll()
@@ -30,9 +24,9 @@ namespace BookStore.API.Controllers
             return Ok();
         }
         [HttpGet]
-        public IActionResult GetByName(string Name)
+        public IActionResult GetByName(string name)
         {
-            GetByNameAuthorViews getByNameAuthor = _authorService.GetByName(Name);
+            GetByNameAuthorViews getByNameAuthor = _authorService.GetByName(name);
             return Ok();
         }
         [HttpPost]
@@ -47,9 +41,9 @@ namespace BookStore.API.Controllers
             return Ok();
         }
         [HttpDelete]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            _authorService.Delete(Id);
+            _authorService.Delete(id);
             return Ok();
         }
     }

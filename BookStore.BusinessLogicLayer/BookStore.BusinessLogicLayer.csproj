@@ -8,4 +8,8 @@
     <ProjectReference Include="..\BookStore.DataAccessLayer\BookStore.DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\AccountViews\" />
+  </ItemGroup>
+
 </Project>

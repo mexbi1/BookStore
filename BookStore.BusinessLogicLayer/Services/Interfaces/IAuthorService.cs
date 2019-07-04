@@ -2,7 +2,7 @@
 
 namespace BookStore.BusinessLogicLayer.Services.Interfaces
 {
-    public  interface IAuthorService
+    public interface IAuthorService
     {
         GetIdAuthorViews GetId(int Id);
         GetAllAuthorViews GetAll();
