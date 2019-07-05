@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BookStore.BusinessLogicLayer.Services
 {
-    class UserManager
+   public class UserManagerService
     {
 
     }

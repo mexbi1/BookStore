@@ -1,17 +1,15 @@
-﻿using BookStore.DataAccessLayer.Models;
+﻿using BookStore.BusinessLogicLayer.Views.AccountViews;
+using BookStore.DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookStore.BusinessLogicLayer.Services.Interfaces
 {
    public interface IAccountService
     {
-        User Authenticate(string name, string password);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void Delete(int id);
+        Task<User> Register(RegisterAccountViews model);
+        Task<object> Login(LoginAccountViews model);
     }
 }
