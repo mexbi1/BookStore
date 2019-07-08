@@ -2,6 +2,7 @@
 using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
 using BookStore.Shared;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookStore.API.Controllers
 {
@@ -11,16 +12,16 @@ namespace BookStore.API.Controllers
     {
         private readonly IAuthorService _authorService;
 
-        [HttpGet]
-        public IActionResult GetId(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetId(int id)
         {
-            GetIdAuthorViews getIdAuthor =  _authorService.GetId(id);
+            GetIdAuthorViews getIdAuthor = _authorService.GetId(id);
             return Ok(_authorService.GetId(id));
-        }   
+        }
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            GetAllAuthorViews getAllAuthors = _authorService.GetAll();  
+            GetAllAuthorViews getAllAuthors = _authorService.GetAll();
             return Ok();
         }
         [HttpGet]

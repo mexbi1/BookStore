@@ -30,24 +30,24 @@ namespace BookStore.BusinessLogicLayer.Services
         }
         public async Task<User> Register(RegisterAccountViews model)
         {
-            var user = new User
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Role = "ures"
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
+        var user = new User
+        {
+            UserName = model.Email,
+            Email = model.Email,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Role = "ures"
+        };
+        var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
                 var errors = result.Errors.ToString();
                 throw new BusinessLogicException(errors);
-            }
-            await _signInManager.SignInAsync(user, false);
+    }
+    await _signInManager.SignInAsync(user, false);
             return user;
         }
-        public async Task<object> Login([FromBody] LoginAccountViews model)
+public async Task<object> Login([FromBody] LoginAccountViews model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
@@ -80,6 +80,6 @@ namespace BookStore.BusinessLogicLayer.Services
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
 
-
         }
+    }
 }
