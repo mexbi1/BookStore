@@ -71,6 +71,25 @@ namespace BookStore.API
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JwtKey"])),
                         ClockSkew = TimeSpan.Zero
                     };
+                //cfg.RequireHttpsMetadata = false;
+                //cfg.TokenValidationParameters = new TokenValidationParameters
+                //{
+                //    // укзывает, будет ли валидироваться издатель при валидации токена
+                //    ValidateIssuer = true,
+                //    // строка, представляющая издателя
+                //    ValidIssuer = AuthOptions.ISSUER,
+
+                //    // будет ли валидироваться потребитель токена
+                //    ValidateAudience = true,
+                //    // установка потребителя токена
+                //    ValidAudience = AuthOptions.AUDIENCE,
+                //    // будет ли валидироваться время существования
+                //    ValidateLifetime = true,
+
+                //    // установка ключа безопасности
+                //    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                //    // валидация ключа безопасности
+                //    ValidateIssuerSigningKey = true,
                 });
 
             services.Configure<IdentityOptions>(options =>

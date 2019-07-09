@@ -54,11 +54,12 @@ public async Task<object> Login([FromBody] LoginAccountViews model)
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return await GenerateJwtToken(model.Email, appUser);
+                return  GenerateJwtToken(model.Email, appUser);
             }
             throw new ApplicationException("Invalid_Login_Attemp");
         }
-        private async Task<object> GenerateJwtToken(string email, IdentityUser user)
+        //создание jwt Токена
+        private string  GenerateJwtToken(string email, IdentityUser user)
         {
             var claims = new List<Claim>
                 {
