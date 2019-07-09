@@ -15,8 +15,8 @@ namespace BookStore.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetId(int id)
         {
-            GetIdAuthorViews getIdAuthor = _authorService.GetId(id);
-            return Ok(_authorService.GetId(id));
+            GetByIdAuthorViews getIdAuthor = _authorService.GetById(id);
+            return Ok(_authorService.GetById(id));
         }
         [HttpGet]
         public  IActionResult GetAll()

@@ -3,6 +3,7 @@ using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
 using BookStore.DataAccessLayer.Models;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.BusinessLogicLayer.Services
 {
@@ -14,38 +15,39 @@ namespace BookStore.BusinessLogicLayer.Services
             _authorRepository = authorRepository;
         }
 
-        public GetIdAuthorViews GetId(int Id)
+        public async Task<GetByIdAuthorViews> GetById(int Id)
         {
-            Author author1 = _authorRepository.GetId(Id);
-            GetIdAuthorViews getAuthor = new GetIdAuthorViews();
-            getAuthor.Name = author1.Name;
+            Author result = await _authorRepository.GetId(Id);
+            GetByIdAuthorViews getAuthor = new GetByIdAuthorViews();
+            getAuthor.Name =  result.Name;
             return getAuthor;
         }
-        public GetByNameAuthorViews GetByName(string name)
+        public async Task<GetByNameAuthorViews> GetByName(string name)
         {
-            Author authors = _authorRepository.GetByName(name);
+            Author result = await _authorRepository.GetByName(name);
             GetByNameAuthorViews getByName = new GetByNameAuthorViews();
+            getByName.Name = result.Name;
             return getByName;
         }
-        public GetAllAuthorViews GetAll()
+        public async Task <GetAllAuthorViews> GetAll()
         {
-            var authors = _authorRepository.GetAll().Select(x => new AuthorGetAllAuthorViewsItem { Name = x.Name }).ToList();
-            return new GetAllAuthorViews() { AllAuthorViews = authors };
+            var result = await _authorRepository.GetAll().Select(x => new AuthorGetAllAuthorViewsItem { Name = x.Name }).ToList();
+            return new GetAllAuthorViews() { AllAuthorViews = result };
         }
-        public void Create(CreateAuthorViews createAuthor)
+        public async Task Create(CreateAuthorViews createAuthor)
         {
             {
-                _authorRepository.Create(new Author() { Name = createAuthor.Name });
+               await  _authorRepository.Create(new Author() { Name = createAuthor.Name });
             }
         }
-        public UpdateAuthorViews Update(UpdateAuthorViews authorViews)
+        public async Task<UpdateAuthorViews> Update(UpdateAuthorViews authorViews)
         {
-            _authorRepository.Update(new Author { Name = authorViews.Name });
+           await _authorRepository.Update(new Author { Name = authorViews.Name });
             return authorViews;
         }
-        public void Delete(int Id)
+        public async Task Delete(int Id)
         {
-            _authorRepository.Delete(Id);
+          await  _authorRepository.Delete(Id);
         }
       }
 }

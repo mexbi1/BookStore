@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 using MimeKit;
 using MailKit.Net.Smtp;
-using static System.Net.Mime.MediaTypeNames;
-
+using BookStore.BusinessLogicLayer.Services.Interfaces;
 
 namespace BookStore.BusinessLogicLayer.Services
 {
-    public class EmailService
+    public class EmailService: IEmailServices
     {
         public async Task SendEmailAsync(string email, string subject, string message)
         {

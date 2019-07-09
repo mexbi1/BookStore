@@ -5,6 +5,7 @@ using BookStore.Shared;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace BookStore.DataAccessLayer.Repository
 {
@@ -17,27 +18,27 @@ namespace BookStore.DataAccessLayer.Repository
             _appsettings = appsettings;
         }
 
-        public Author Create(Author author)
+        public async Task<Author> Create(Author author)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
                 var SqlQuery = ("INSERT INTO Authors (Name) UOTPUT INSERTED * VALUES(@Name)");
-                return db.QuerySingle<Author>(SqlQuery, author);
+                return await db.QuerySingleAsync<Author>(SqlQuery, author);
             }
         }
-        public void Update(Author author)
+        public async Task Update(Author author)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
                 var SqlQuery = ("@UPDATE[dbo].[Book] SET Name = @Name Where Authorid = @AuthorId");
-                var result = db.Execute(SqlQuery, author);
+                var result = await db.ExecuteAsync(SqlQuery, author);
             }
         }
-        public Author GetByName(string name)
+        public async Task<Author> GetByName(string name)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.QuerySingle<Author>($"SELECT * FROM Authors WHERE Name = @Name", new { Name = name});
+                return await db.QuerySingleAsync<Author>($"SELECT * FROM Authors WHERE Name = @Name", new { Name = name});
             }
         }
 

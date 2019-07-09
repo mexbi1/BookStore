@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BookStore.BusinessLogicLayer.Views.MagazineViewsService
 {
-    class DeleteMagazineViews
+    public class DeleteMagazineViews
     {
         public int Id { get; set; }
     }

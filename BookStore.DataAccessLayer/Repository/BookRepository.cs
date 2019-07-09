@@ -5,6 +5,7 @@ using BookStore.Shared;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace BookStore.DataAccessLayer.Repository
 {
@@ -17,7 +18,7 @@ namespace BookStore.DataAccessLayer.Repository
             _appsettings = appsettings;
         }
 
-        public Book Create(Book book)
+        public async Task<Book> Create(Book book)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {

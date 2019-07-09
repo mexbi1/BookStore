@@ -1,12 +1,13 @@
 ﻿using BookStore.DataAccessLayer.Models;
 using BookStore.DataAccessLayer.Repository.GenericRepository;
+using System.Threading.Tasks;
 
 namespace BookStore.DataAccessLayer.Repository.Interfaces
 {
     public interface IAuthorRepository : IGenericRepository<Author>
     {
-        void Update(Author author);
-        Author Create(Author author);
-        Author GetByName(string name);
+        Task Update(Author author);
+        Task<Author> Create(Author author);
+        Task<Author> GetByName(string name);
     }
 }

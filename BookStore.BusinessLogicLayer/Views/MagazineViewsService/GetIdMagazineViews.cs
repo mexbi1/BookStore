@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BookStore.BusinessLogicLayer.Views.MagazineViewsService
 {
-    class GetIdMagazineViews
+    public class GetByIdMagazineViews
     {
         public int Id { get; set; }
         public string Title { get; set; }

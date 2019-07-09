@@ -5,8 +5,8 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
 {
     public interface IUserRepository:IGenericRepository<User>
     {
-             User Create(User user);
-             void Update(User user);
+             //User Create(User user);
+             //void Update(User user);
 
     }
 }
