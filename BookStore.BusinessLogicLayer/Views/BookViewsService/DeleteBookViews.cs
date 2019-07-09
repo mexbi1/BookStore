@@ -1,6 +1,6 @@
 ﻿namespace BookStore.BusinessLogicLayer.Views.BookViewsService
 {
-    class DeleteBookViews
+    public class DeleteBookViews
     {
         public int Id { get; set; }
     }

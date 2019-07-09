@@ -1,17 +1,17 @@
 ﻿using BookStore.DataAccessLayer.EntityFramework;
 using BookStore.DataAccessLayer.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 
 namespace BookStore.API.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
 
-    public class ValuesController : ControllerBase
+    public class ValuesController : Controller
     {
         private readonly IBookRepository _bookRepository;
 
@@ -20,13 +20,10 @@ namespace BookStore.API.Controllers
             _bookRepository = bookRepository;
         }
 
-
-       
-
         // POST api/values
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void  Post([FromBody] string value)
         {
             using (ApplicationContext db = new ApplicationContext())
             {

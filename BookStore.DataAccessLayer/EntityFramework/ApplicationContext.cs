@@ -15,6 +15,7 @@ namespace BookStore.DataAccessLayer.EntityFramework
         public DbSet<MagazineOrder> MagazoneOrders { get; set; }
         public DbSet<BookOrder> BookOrders { get; set; }
         public DbSet<MainOrder> MainOrders { get; set; }
+      
 
 
         public ApplicationContext()
@@ -43,7 +44,6 @@ namespace BookStore.DataAccessLayer.EntityFramework
                 .HasKey(x => new { x.MagazineId, x.UserId });
             modelBuilder.Entity<BookOrder>()
                 .HasKey(x => new { x.BookId, x.UserId });
-
         }   
 
     }

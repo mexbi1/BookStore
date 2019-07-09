@@ -34,13 +34,11 @@ namespace BookStore.API
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddScoped<AppSettings>(s => new AppSettings() { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IMagazineRepository, MagazineRepository>();
-         //   services.AddScoped<IUserRepository, UserRepository>();
+         // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddScoped<IAuthorService, AuthorService>();
@@ -52,7 +50,7 @@ namespace BookStore.API
                 .AddDefaultTokenProviders();
 
 
-
+            var str = Configuration["JwtKey"];
             services.AddAuthentication(options =>
            {
                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -71,6 +69,7 @@ namespace BookStore.API
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JwtKey"])),
                         ClockSkew = TimeSpan.Zero
                     };
+
                 //cfg.RequireHttpsMetadata = false;
                 //cfg.TokenValidationParameters = new TokenValidationParameters
                 //{

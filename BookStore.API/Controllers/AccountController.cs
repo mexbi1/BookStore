@@ -13,12 +13,12 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.API.Controllers
 {
-    [Route("api/[controller/action]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
-        private ILogger<AccountController> _logger;
+       // private readonly IAccountService _accountService;
+       // private ILogger<AccountController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 

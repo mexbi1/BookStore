@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BookStore.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetId(int id)
+        public IActionResult GetId(int id)
         {
             GetIdAuthorViews getIdAuthor = _authorService.GetId(id);
             return Ok(_authorService.GetId(id));
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public  IActionResult GetAll()
         {
             GetAllAuthorViews getAllAuthors = _authorService.GetAll();
             return Ok();
@@ -36,7 +36,7 @@ namespace BookStore.API.Controllers
            _authorService.Create(createAuthor);
         }
         [HttpPut]
-        public IActionResult Update(UpdateAuthorViews update)
+        public  IActionResult Update(UpdateAuthorViews update)
         {
             _authorService.Update(update);
             return Ok();
