@@ -23,23 +23,23 @@ namespace BookStore.DataAccessLayer.Repository
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
                 var sqlQuery = "INSERT INTO Books (Title,Price) OUTPUT INSERTED * VALUES(@Title, @Price)";
-                return db.QuerySingle<Book>(sqlQuery, book);
+                return await db.QuerySingleAsync<Book>(sqlQuery, book);
             }
         }
 
-        public void Update(Book book)
+        public async Task Update(Book book)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
                 var SqlQuery = $"UPDATE[dbo].[Book] SET Title = @Title AND Price = @Price  WHERE  BookId = @Bookd";
-                var result = db.Execute(SqlQuery, book);
+                var result = await db.ExecuteAsync(SqlQuery, book);
             }
         }
-        public Book GetTitle(string Title)
+        public async Task<Book> GetTitle(string Title)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return db.QuerySingle<Book>($"SELECT * FROM Books WHERE Title = @Title",new {title = Title});
+                return await db.QuerySingleAsync<Book>($"SELECT * FROM Books WHERE Title = @Title",new {title = Title});
             }
         }
 

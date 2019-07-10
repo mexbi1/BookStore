@@ -48,11 +48,11 @@ namespace BookStore.API.Controllers
         //public void Delete(int id)
 
 
-        [HttpGet]
-        public List<Book> GetAll()
-        {
-            return _bookRepository.GetAll().ToList();
-        }
+        //[HttpGet]
+        //public List<Book> GetAll()
+        //{
+        //    return (await _bookRepository.GetAll()).ToList();
+        //}
     }
 
 }

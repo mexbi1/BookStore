@@ -6,7 +6,7 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
 {
     public interface IAuthorRepository : IGenericRepository<Author>
     {
-        Task Update(Author author);
+        Task<Author> Update(Author author);
         Task<Author> Create(Author author);
         Task<Author> GetByName(string name);
     }

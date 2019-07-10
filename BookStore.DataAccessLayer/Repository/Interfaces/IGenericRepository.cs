@@ -5,7 +5,7 @@ namespace BookStore.DataAccessLayer.Repository.GenericRepository
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> GetId(int Id);
+        Task<TEntity> GetById(int Id);
         Task<IEnumerable<TEntity>> GetAll();
         Task Delete(int Id);
     }

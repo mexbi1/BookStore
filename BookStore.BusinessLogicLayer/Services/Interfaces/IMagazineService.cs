@@ -14,6 +14,6 @@ namespace BookStore.BusinessLogicLayer.Services.Interfaces
         Task<UpdateMagazineViews> Update(UpdateMagazineViews updateMagazine);
         Task<GetAllMagazineViews> GetAll();
         Task<GetByIdMagazineViews> GetById(int id);
-        Task<GetByNameMagazineViews> GetByName(string name);
+        Task<GetByNameMagazineViews> GetTitle(string name);
     }
 }

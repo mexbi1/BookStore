@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BookStore.DataAccessLayer.Repository.GenericRepository
 {
-    public class GenericRepository<TEntity> : Task<IGenericRepository<TEntity>> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly AppSettings _appsettings;
 
-        public  GenericRepository(AppSettings appsettings)
+        public GenericRepository(AppSettings appsettings)
         {
             _appsettings = appsettings;
         }   
@@ -21,10 +21,10 @@ namespace BookStore.DataAccessLayer.Repository.GenericRepository
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return await db.QueryAsync<TEntity>($"SELECT * FROM {typeof(TEntity).Name}s").ToList();
+                return (await db.QueryAsync<TEntity>($"SELECT * FROM {typeof(TEntity).Name}s")).ToList();
             }
         }
-        public async Task<TEntity> GetId(int Id)
+        public async Task<TEntity> GetById(int Id)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {

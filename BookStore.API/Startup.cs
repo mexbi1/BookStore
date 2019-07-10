@@ -37,7 +37,7 @@ namespace BookStore.API
 
             services.AddScoped<AppSettings>(s => new AppSettings() { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IMagazineRepository, MagazineRepository>();
+            services.AddScoped<IMagazineRepository, IMagazineRepository>();
          // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 

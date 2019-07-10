@@ -13,38 +13,38 @@ namespace BookStore.API.Controllers
         private readonly IAuthorService _authorService;
 
         [HttpGet("{id}")]
-        public IActionResult GetId(int id)
+        public async Task<IActionResult> GetId(int id)
         {
-            GetByIdAuthorViews getIdAuthor = _authorService.GetById(id);
-            return Ok(_authorService.GetById(id));
+            GetByIdAuthorViews getIdAuthor = await _authorService.GetById(id);
+            return Ok(getIdAuthor.Name);
         }
         [HttpGet]
-        public  IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            GetAllAuthorViews getAllAuthors = _authorService.GetAll();
+            GetAllAuthorViews getAllAuthors = await _authorService.GetAll();
             return Ok();
         }
         [HttpGet]
-        public IActionResult GetByName(string name)
+        public async Task<IActionResult> GetByName(string name)
         {
-            GetByNameAuthorViews getByNameAuthor = _authorService.GetByName(name);
+            GetByNameAuthorViews getByNameAuthor = await _authorService.GetByName(name);
             return Ok();
         }
         [HttpPost]
-        public void Create(CreateAuthorViews createAuthor)
+        public async Task<IActionResult> Create(CreateAuthorViews createAuthor)
         {
-           _authorService.Create(createAuthor);
+           var result = await _authorService.Create(createAuthor);
+            return Ok(createAuthor);
         }
         [HttpPut]
-        public  IActionResult Update(UpdateAuthorViews update)
+        public async Task<IActionResult> Update(UpdateAuthorViews update)
         {
-            _authorService.Update(update);
+            await _authorService.Update(update);
             return Ok();
-        }
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _authorService.Delete(id);
+            await  _authorService.Delete(id);
             return Ok();
         }
     }

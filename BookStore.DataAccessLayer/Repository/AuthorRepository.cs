@@ -26,12 +26,12 @@ namespace BookStore.DataAccessLayer.Repository
                 return await db.QuerySingleAsync<Author>(SqlQuery, author);
             }
         }
-        public async Task Update(Author author)
+        public async Task<Author> Update(Author author)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
                 var SqlQuery = ("@UPDATE[dbo].[Book] SET Name = @Name Where Authorid = @AuthorId");
-                var result = await db.ExecuteAsync(SqlQuery, author);
+                return await db.QuerySingleAsync<Author>(SqlQuery, author);
             }
         }
         public async Task<Author> GetByName(string name)
