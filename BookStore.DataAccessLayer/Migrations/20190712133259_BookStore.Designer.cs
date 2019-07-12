@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190704091336_IdentityMigration")]
-    partial class IdentityMigration
+    [Migration("20190712133259_BookStore")]
+    partial class BookStore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,28 +23,32 @@ namespace BookStore.DataAccessLayer.Migrations
 
             modelBuilder.Entity("BookStore.DataAccessLayer.Models.Author", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("Name");
 
-                    b.HasKey("AuthorId");
+                    b.HasKey("Id");
 
                     b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("BookStore.DataAccessLayer.Models.Book", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<decimal>("Price");
 
                     b.Property<string>("Title");
 
-                    b.HasKey("BookId");
+                    b.HasKey("Id");
 
                     b.ToTable("Books");
                 });
@@ -87,15 +91,17 @@ namespace BookStore.DataAccessLayer.Migrations
 
             modelBuilder.Entity("BookStore.DataAccessLayer.Models.Magazine", b =>
                 {
-                    b.Property<int>("MagazineId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Price");
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<decimal>("Price");
 
                     b.Property<string>("Title");
 
-                    b.HasKey("MagazineId");
+                    b.HasKey("Id");
 
                     b.ToTable("Magazines");
                 });
@@ -157,6 +163,10 @@ namespace BookStore.DataAccessLayer.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -172,6 +182,8 @@ namespace BookStore.DataAccessLayer.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("Role");
 
                     b.Property<string>("SecurityStamp");
 

@@ -1,15 +1,15 @@
-﻿using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
+﻿using BookStore.BusinessLogicLayer.Views.AuthorViews;
 using System.Threading.Tasks;
 
 namespace BookStore.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAuthorService
     {
-        Task<GetByIdAuthorViews> GetById(int Id);
-        Task<GetAllAuthorViews> GetAll();
-        Task<CreateAuthorViews> Create(CreateAuthorViews createAuthorViews);
+        Task<GetByIdAuthorView> GetById(int id);
+        Task<GetAllAuthorView> GetAll();
+        Task<GetByNameAuthorView> GetByName(string name);
+        Task Create(CreateAuthorView createAuthorViews);
         Task Delete(int Id);
-        Task<UpdateAuthorViews> Update(UpdateAuthorViews updateAuthorView);
-        Task<GetByNameAuthorViews> GetByName(string name);
+        Task Update(UpdateAuthorView updateAuthorView);
     }
 }

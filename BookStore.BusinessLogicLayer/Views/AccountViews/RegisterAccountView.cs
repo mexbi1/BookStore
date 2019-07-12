@@ -2,7 +2,7 @@
 
 namespace BookStore.BusinessLogicLayer.Views.AccountViews
 {
-   public class RegisterAccountViews
+   public class RegisterAccountView
     {
         [Required]
         [Display(Name = "Email")]

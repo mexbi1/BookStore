@@ -37,12 +37,14 @@ namespace BookStore.API
 
             services.AddScoped<AppSettings>(s => new AppSettings() { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IMagazineRepository, IMagazineRepository>();
-         // services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMagazineRepository, MagazineRepository>();
+            // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IMagazineService, MagazineService>();
+            services.AddScoped<IBookService, BookService>();
 
 
             services.AddIdentity<IdentityUser, IdentityRole>()
@@ -70,25 +72,25 @@ namespace BookStore.API
                         ClockSkew = TimeSpan.Zero
                     };
 
-                //cfg.RequireHttpsMetadata = false;
-                //cfg.TokenValidationParameters = new TokenValidationParameters
-                //{
-                //    // укзывает, будет ли валидироваться издатель при валидации токена
-                //    ValidateIssuer = true,
-                //    // строка, представляющая издателя
-                //    ValidIssuer = AuthOptions.ISSUER,
+                    //cfg.RequireHttpsMetadata = false;
+                    //cfg.TokenValidationParameters = new TokenValidationParameters
+                    //{
+                    //    // укзывает, будет ли валидироваться издатель при валидации токена
+                    //    ValidateIssuer = true,
+                    //    // строка, представляющая издателя
+                    //    ValidIssuer = AuthOptions.ISSUER,
 
-                //    // будет ли валидироваться потребитель токена
-                //    ValidateAudience = true,
-                //    // установка потребителя токена
-                //    ValidAudience = AuthOptions.AUDIENCE,
-                //    // будет ли валидироваться время существования
-                //    ValidateLifetime = true,
+                    //    // будет ли валидироваться потребитель токена
+                    //    ValidateAudience = true,
+                    //    // установка потребителя токена
+                    //    ValidAudience = AuthOptions.AUDIENCE,
+                    //    // будет ли валидироваться время существования
+                    //    ValidateLifetime = true,
 
-                //    // установка ключа безопасности
-                //    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                //    // валидация ключа безопасности
-                //    ValidateIssuerSigningKey = true,
+                    //    // установка ключа безопасности
+                    //    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                    //    // валидация ключа безопасности
+                    //    ValidateIssuerSigningKey = true,
                 });
 
             services.Configure<IdentityOptions>(options =>
@@ -105,7 +107,7 @@ namespace BookStore.API
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = false;
             });
-            
+
 
             services.AddMvc();
 

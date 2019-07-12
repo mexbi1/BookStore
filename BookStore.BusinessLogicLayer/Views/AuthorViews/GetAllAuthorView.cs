@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace BookStore.BusinessLogicLayer.Views.AuthorViewsService
+namespace BookStore.BusinessLogicLayer.Views.AuthorViews
 {
-    public class GetAllAuthorViews
+    public class GetAllAuthorView
     {
         public List<AuthorGetAllAuthorViewsItem> Authors { get; set; }
-        public GetAllAuthorViews()
+        public GetAllAuthorView()
         {
             Authors = new List<AuthorGetAllAuthorViewsItem>();
         }

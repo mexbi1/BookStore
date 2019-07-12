@@ -5,7 +5,7 @@ using BookStore.Shared;
 namespace BookStore.DataAccessLayer.Repository
 {
 
-    public class UserRepository: GenericRepository<User>
+    public class UserRepository : GenericRepository<User>
     {
         private readonly AppSettings _appsettings;
         public UserRepository(AppSettings appsettings) : base(appsettings)

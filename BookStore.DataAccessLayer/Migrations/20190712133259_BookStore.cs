@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookStore.DataAccessLayer.Migrations
 {
-    public partial class IdentityMigration : Migration
+    public partial class BookStore : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,10 @@ namespace BookStore.DataAccessLayer.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,41 +54,44 @@ namespace BookStore.DataAccessLayer.Migrations
                 name: "Authors",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Magazines",
                 columns: table => new
                 {
-                    MagazineId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    Price = table.Column<int>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Magazines", x => x.MagazineId);
+                    table.PrimaryKey("PK_Magazines", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,13 +237,13 @@ namespace BookStore.DataAccessLayer.Migrations
                         name: "FK_BookAuthors_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
-                        principalColumn: "AuthorId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookAuthors_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "BookId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -259,7 +265,7 @@ namespace BookStore.DataAccessLayer.Migrations
                         name: "FK_BookOrders_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "BookId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookOrders_AspNetUsers_UserId1",
@@ -287,7 +293,7 @@ namespace BookStore.DataAccessLayer.Migrations
                         name: "FK_MagazoneOrders_Magazines_MagazineId",
                         column: x => x.MagazineId,
                         principalTable: "Magazines",
-                        principalColumn: "MagazineId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MagazoneOrders_AspNetUsers_UserId1",

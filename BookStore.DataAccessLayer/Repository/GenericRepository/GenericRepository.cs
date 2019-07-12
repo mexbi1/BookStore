@@ -1,5 +1,6 @@
 ﻿using BookStore.Shared;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -15,7 +16,7 @@ namespace BookStore.DataAccessLayer.Repository.GenericRepository
         public GenericRepository(AppSettings appsettings)
         {
             _appsettings = appsettings;
-        }   
+        }
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
@@ -26,18 +27,22 @@ namespace BookStore.DataAccessLayer.Repository.GenericRepository
         }
         public async Task<TEntity> GetById(int Id)
         {
-            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            try
             {
-                return await db.QuerySingleAsync<TEntity>($"SELECT * FROM {typeof(TEntity).Name}s WHERE {typeof(TEntity).Name}s Id = {Id}");
+                using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+                {
+                    return await db.QuerySingleAsync<TEntity>($"SELECT * FROM {typeof(TEntity).Name}s WHERE Id = {Id}");
+                }
             }
-        }
-        
-        public async Task Delete(int Id)
+            catch (Exception ex)
+            { throw ex; }
+            }
+        public async Task Delete(int id)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var sqlQuery = $"DELETE FROM {typeof(TEntity).Name}s WHERE {typeof(TEntity).Name}s Id = {Id}";
-                var result = await db.ExecuteAsync(sqlQuery);
+                var sqlQuery = $"DELETE FROM {typeof(TEntity).Name}s WHERE Id = {id}";
+                var result = await db.ExecuteAsync(sqlQuery, new { id });
             }
         }
     }

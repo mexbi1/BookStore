@@ -1,6 +1,5 @@
 ﻿using BookStore.BusinessLogicLayer.Services.Interfaces;
-using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
-using BookStore.Shared;
+using BookStore.BusinessLogicLayer.Views.AuthorViews;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -12,39 +11,46 @@ namespace BookStore.API.Controllers
     {
         private readonly IAuthorService _authorService;
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetId(int id)
+        public AuthorController(IAuthorService authorService)
         {
-            GetByIdAuthorViews getIdAuthor = await _authorService.GetById(id);
-            return Ok(getIdAuthor.Name);
+            _authorService = authorService;
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetById(int id)
+        {
+            GetByIdAuthorView getIdAuthor = await _authorService.GetById(id);
+            return Ok(getIdAuthor);
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            GetAllAuthorViews getAllAuthors = await _authorService.GetAll();
-            return Ok();
+            GetAllAuthorView getAllAuthors = await _authorService.GetAll();
+            return Ok(getAllAuthors);
         }
         [HttpGet]
-        public async Task<IActionResult> GetByName(string name)
+        public async Task<IActionResult> GetByTitle(string name)
         {
-            GetByNameAuthorViews getByNameAuthor = await _authorService.GetByName(name);
-            return Ok();
+            GetByNameAuthorView getByNameAuthor = await _authorService.GetByName(name);
+            return Ok(getByNameAuthor);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAuthorViews createAuthor)
+        public async Task<IActionResult> Create(CreateAuthorView createAuthor)
         {
-           var result = await _authorService.Create(createAuthor);
-            return Ok(createAuthor);
+            await _authorService.Create(createAuthor);
+            return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateAuthorViews update)
+        public async Task<IActionResult> Update(UpdateAuthorView update)
         {
             await _authorService.Update(update);
             return Ok();
+        }
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            await  _authorService.Delete(id);
+            await _authorService.Delete(id);
             return Ok();
         }
     }

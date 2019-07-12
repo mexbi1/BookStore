@@ -9,7 +9,7 @@ namespace BookStore.BusinessLogicLayer.Services.Interfaces
 {
    public interface IAccountService
     {
-        Task<User> Register(RegisterAccountViews model);
-        Task<object> Login(LoginAccountViews model);
+        Task<User> Register(RegisterAccountView model);
+        Task<object> Login(LoginAccountView model);
     }
 }

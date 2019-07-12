@@ -3,13 +3,14 @@ using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using BookStore.Shared;
 using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace BookStore.DataAccessLayer.Repository
 {
-   public  class BookRepository : GenericRepository<Book>, IBookRepository
+    public class BookRepository : GenericRepository<Book>, IBookRepository
     {
         private readonly AppSettings _appsettings;
 
@@ -18,29 +19,39 @@ namespace BookStore.DataAccessLayer.Repository
             _appsettings = appsettings;
         }
 
-        public async Task<Book> Create(Book book)
+        public async Task Create(Book book)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var sqlQuery = "INSERT INTO Books (Title,Price) OUTPUT INSERTED * VALUES(@Title, @Price)";
-                return await db.QuerySingleAsync<Book>(sqlQuery, book);
+                var sqlQuery = "INSERT INTO Books (Title,Price,CreationDate) VALUES(@Title, @Price,@CreationDate)";
+                var result = await db.ExecuteAsync(sqlQuery, book);
             }
         }
 
         public async Task Update(Book book)
         {
-            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            try
             {
-                var SqlQuery = $"UPDATE[dbo].[Book] SET Title = @Title AND Price = @Price  WHERE  BookId = @Bookd";
-                var result = await db.ExecuteAsync(SqlQuery, book);
+                using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+                {
+                    var SqlQuery = $"UPDATE[dbo].[Books] SET Title = @Title , Price = @Price  WHERE  Id = @Id";
+                    var result = await db.ExecuteAsync(SqlQuery, book);
+                }
             }
+            catch (Exception ex)
+            { throw ex; }
         }
-        public async Task<Book> GetTitle(string Title)
+        public async Task<Book> GetByTitle(string title)
         {
-            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            try
             {
-                return await db.QuerySingleAsync<Book>($"SELECT * FROM Books WHERE Title = @Title",new {title = Title});
+                using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+                {
+                    return await db.QuerySingleAsync<Book>($"SELECT * FROM Books WHERE Title = @Title", new { Title = title });
+                }
             }
+            catch (Exception ex)
+            { throw ex; }
         }
 
     }

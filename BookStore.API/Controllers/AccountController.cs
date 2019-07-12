@@ -17,11 +17,17 @@ namespace BookStore.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-       // private readonly IAccountService _accountService;
-       // private ILogger<AccountController> _logger;
+        // private readonly IAccountService _accountService;
+        // private ILogger<AccountController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly RoleManager<>
 
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
 
         [HttpPost]
         //public async Task<IActionResult> Login([FromBody] LoginAccountViews model)
@@ -37,7 +43,7 @@ namespace BookStore.API.Controllers
         //    }
         //    catch (Exception exception)
         //    {
-        //        _logger.LogInformation(exception.Message);
+        //        _logger.Logcritical(exception.Message);
         //        return StatusCode((int)HttpStatusCode.InternalServerError);
         //    }
         //}
@@ -60,7 +66,7 @@ namespace BookStore.API.Controllers
         //    return StatusCode((int)HttpStatusCode.InternalServerError);
         //}
 
-        public async Task<IActionResult> Register(RegisterAccountViews model)
+        public async Task<IActionResult> Register(RegisterAccountView model)
         {
             User user = new User { Email = model.Email, UserName = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -89,7 +95,7 @@ namespace BookStore.API.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            if(userId == null || code == null)
+            if (userId == null || code == null)
             {
                 return Ok("Error");
             }
@@ -108,7 +114,7 @@ namespace BookStore.API.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginAccountViews model)
+        public async Task<IActionResult> Login(LoginAccountView model)
         {
             if (ModelState.IsValid)
             {

@@ -3,6 +3,7 @@ using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using BookStore.Shared;
 using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -18,27 +19,34 @@ namespace BookStore.DataAccessLayer.Repository
             _appsettings = appsettings;
         }
 
-        public async Task<Author> Create(Author author)
+        public async Task Create(Author author)
         {
-            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            try
             {
-                var SqlQuery = ("INSERT INTO Authors (Name) UOTPUT INSERTED * VALUES(@Name)");
-                return await db.QuerySingleAsync<Author>(SqlQuery, author);
+                using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+                {
+                    var SqlQuery = "INSERT INTO Authors (Name, CreationDate)  VALUES(@Name,@CreationDate)";
+                    var result = await db.ExecuteAsync(SqlQuery, author);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
-        public async Task<Author> Update(Author author)
+        public async Task Update(Author author)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var SqlQuery = ("@UPDATE[dbo].[Book] SET Name = @Name Where Authorid = @AuthorId");
-                return await db.QuerySingleAsync<Author>(SqlQuery, author);
+                var SqlQuery = (@"UPDATE [dbo].[Authors] SET Name = @Name Where Id = @Id");
+                var result = await db.ExecuteAsync(SqlQuery, author);
             }
         }
         public async Task<Author> GetByName(string name)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return await db.QuerySingleAsync<Author>($"SELECT * FROM Authors WHERE Name = @Name", new { Name = name});
+                return await db.QuerySingleAsync<Author>($"SELECT * FROM Authors WHERE Name = @Name", new { Name = name });
             }
         }
 

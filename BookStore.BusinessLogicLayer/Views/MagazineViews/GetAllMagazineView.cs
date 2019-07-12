@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace BookStore.BusinessLogicLayer.Views.MagazineViewsService
+namespace BookStore.BusinessLogicLayer.Views.MagazineViews
 {
-    public class GetAllMagazineViews
+    public class GetAllMagazineView
     {
         public List<MagazineGetAllMagazineViewItem> MagazineItem;
     }

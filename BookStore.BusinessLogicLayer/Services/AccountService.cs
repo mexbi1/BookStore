@@ -28,7 +28,7 @@ namespace BookStore.BusinessLogicLayer.Services
             _userManager = userManager;
             _configuration = configuration;
         }
-        public async Task<User> Register(RegisterAccountViews model)
+        public async Task<User> Register(RegisterAccountView model)
         {
         var user = new User
         {
@@ -47,7 +47,7 @@ namespace BookStore.BusinessLogicLayer.Services
     await _signInManager.SignInAsync(user, false);
             return user;
         }
-public async Task<object> Login([FromBody] LoginAccountViews model)
+public async Task<object> Login([FromBody] LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 

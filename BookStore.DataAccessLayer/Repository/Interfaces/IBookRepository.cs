@@ -7,7 +7,7 @@ namespace BookStore.DataAccessLayer.Repository.Interfaces
     public interface IBookRepository: IGenericRepository<Book>
     {
         Task Update( Book book);
-        Task<Book> Create( Book book);
-        Task<Book> GetTitle(string Title);
+        Task Create( Book book);
+        Task<Book> GetByTitle(string Title);
     }
 }

@@ -1,58 +1,59 @@
 ﻿using BookStore.BusinessLogicLayer.Services.Interfaces;
-using BookStore.BusinessLogicLayer.Views.AuthorViewsService;
-using BookStore.BusinessLogicLayer.Views.MagazineViewsService;
+using BookStore.BusinessLogicLayer.Views.MagazineViews;
 using BookStore.DataAccessLayer.Models;
-using BookStore.DataAccessLayer.Repository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.BusinessLogicLayer.Services
 {
     public class MagazineService : IMagazineService
-    { 
+    {
         private readonly IMagazineRepository _magazineRepository;
 
-        public async Task<GetByIdMagazineViews> GetById(int id)
+        public MagazineService(IMagazineRepository magazineRepository)
+        {
+            _magazineRepository = magazineRepository;
+        }
+
+        public async Task<GetByIdMagazineView> GetById(int id)
         {
             Magazine magazine = await _magazineRepository.GetById(id);
-            GetByIdMagazineViews result = new GetByIdMagazineViews();
-            result.Id = magazine.MagazineId;
-            return result;
-
-        }
-        public async Task<GetByNameMagazineViews> GetTitle(string title)
-        {
-            Magazine magazine = await _magazineRepository.GetTitle(title);
-            GetByNameMagazineViews result = new GetByNameMagazineViews();
+            GetByIdMagazineView result = new GetByIdMagazineView();
+            result.Id = magazine.Id;
             result.Title = magazine.Title;
+            result.Price = magazine.Price;
+            return result;
+        }
+        public async Task<GetByTitleMagazineView> GetByTitle(string title)
+        {
+            Magazine magazine = await _magazineRepository.GetByTitle(title);
+            GetByTitleMagazineView result = new GetByTitleMagazineView();
+            result.Id = magazine.Id;
+            result.Title = magazine.Title;
+            result.Price = magazine.Price;
             return result;
         }
 
-        public async Task<GetAllMagazineViews> GetAll()
+        public async Task<GetAllMagazineView> GetAll()
         {
-           var magazines = (await _magazineRepository.GetAll()).Select(x => new MagazineGetAllMagazineViewItem { Title = x.Title,Price = x.Price }).ToList();
-            GetAllMagazineViews result = new GetAllMagazineViews();
+            var magazines = (await _magazineRepository.GetAll()).Select(x => new MagazineGetAllMagazineViewItem {Id = x.Id, Title = x.Title, Price = x.Price }).ToList();
+            GetAllMagazineView result = new GetAllMagazineView();
             result.MagazineItem = magazines;
-            return new GetAllMagazineViews() { MagazineItem = magazines };
+            return result;
         }
         public async Task Delete(int id)
         {
             await _magazineRepository.Delete(id);
         }
-        public async Task<CreateMagazineViews> Create(CreateMagazineViews createMagazine)
+        public async Task Create(CreateMagazineView createMagazine)
         {
-           await _magazineRepository.Create(new Magazine { Title = createMagazine.Title, Price = createMagazine.Price }); ;
-            return createMagazine;
+            await _magazineRepository.Create(new Magazine { Title = createMagazine.Title, Price = createMagazine.Price }); ;
         }
 
-        public async Task<UpdateMagazineViews> Update(UpdateMagazineViews updateMagazine)
+        public async Task Update(UpdateMagazineView updateMagazine)
         {
-            await _magazineRepository.Update(new Magazine { Title = updateMagazine.Title, Price = updateMagazine.Price });
-            return updateMagazine;
+            await _magazineRepository.Update(new Magazine {Id = updateMagazine.Id,  Title = updateMagazine.Title, Price = updateMagazine.Price });
         }
     }
 }

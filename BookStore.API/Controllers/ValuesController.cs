@@ -23,7 +23,7 @@ namespace BookStore.API.Controllers
         // POST api/values
 
         [HttpPost]
-        public void  Post([FromBody] string value)
+        public void Post([FromBody] string value)
         {
             using (ApplicationContext db = new ApplicationContext())
             {

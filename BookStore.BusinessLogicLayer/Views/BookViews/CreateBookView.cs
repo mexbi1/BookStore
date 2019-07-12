@@ -1,6 +1,6 @@
-﻿namespace BookStore.BusinessLogicLayer.Views.BookViewsService
+﻿namespace BookStore.BusinessLogicLayer.Views.BookViews
 {
-   public class CreateBookViews
+   public class CreateBookView
     {
         public int Id { get; set; }
         public string Title { get; set; }

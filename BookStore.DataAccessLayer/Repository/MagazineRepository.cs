@@ -3,6 +3,7 @@ using BookStore.DataAccessLayer.Repository.GenericRepository;
 using BookStore.DataAccessLayer.Repository.Interfaces;
 using BookStore.Shared;
 using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -19,27 +20,32 @@ namespace BookStore.DataAccessLayer.Repository
             _appsettings = appsettings;
         }
 
-        public async Task<Magazine> Create(Magazine magazine)
+        public async Task Create(Magazine magazine)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                var SqlQuery =   "INSERT INTO Magazines (Title,Price) OUTPUT INSERTED * VALUES(@Title,@Price)";
-               return await db.QuerySingleAsync<Magazine>(SqlQuery, magazine);
+                var SqlQuery = "INSERT INTO Magazines (Title,Price,CreationDate) VALUES(@Title,@Price,@CreationDate)";
+                var result = await db.ExecuteAsync(SqlQuery, magazine);
             }
         }
         public async Task Update(Magazine magazine)
         {
-            using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+            try
             {
-                var SqlQuery = "UPDATE[dbo].[Book] SET Price = @Price AND Title = @Title WHERE MagazineId = @MagazineId";
-                var result = await db.ExecuteAsync(SqlQuery, magazine);
+                using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
+                {
+                    var SqlQuery = "UPDATE[dbo].[Magazines] SET Price = @Price , Title = @Title WHERE Id = @Id";
+                    var result = await db.ExecuteAsync(SqlQuery, magazine);
+                }
             }
+            catch (Exception ex)
+            { throw ex; }
         }
-        public async Task<Magazine> GetTitle(string Title)
+        public async Task<Magazine> GetByTitle(string Title)
         {
             using (IDbConnection db = new SqlConnection(_appsettings.ConnectionString))
             {
-                return await db.QuerySingleAsync<Magazine>($"SELECT * FROM Magazines WHERE Title = @Title",new { title = Title});
+                return await db.QuerySingleAsync<Magazine>($"SELECT * FROM Magazines WHERE Title = @Title", new { title = Title });
             }
         }
     }

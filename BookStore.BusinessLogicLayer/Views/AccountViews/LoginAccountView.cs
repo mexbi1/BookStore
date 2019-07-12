@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BookStore.BusinessLogicLayer.Views.AccountViews
 {
-    public class LoginAccountViews
+    public class LoginAccountView
     {
         [Required]
         [Display(Name = "Email")]

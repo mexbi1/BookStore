@@ -2,9 +2,8 @@
 
 namespace BookStore.DataAccessLayer.Models
 {
-    public class Book
+    public class Book:BaseModel
     {
-        public int BookId { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }
 

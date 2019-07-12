@@ -1,4 +1,4 @@
-﻿namespace BookStore.BusinessLogicLayer.Views.AuthorViewsService
+﻿namespace BookStore.BusinessLogicLayer.Views.AuthorViews
 {
     public class DeleteAuthorViews
     {
